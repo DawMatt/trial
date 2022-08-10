@@ -4,10 +4,13 @@
 
 # Note: radar.json in current folder is embedded in the image
 
-docker build --tag my-tech-radar:0.5.2 .
+export version=`git rev-parse HEAD`
+docker build --tag my-tech-radar:latest --tag my-tech-radar:0.5.2 --tag my-tech-radar:$version .
 
-# Run radar and open in browser
+# Run radar in background and open in browser
 
-docker run -p8080:8080 my-tech-radar:0.5.2
+docker run -d --rm -p8080:8080 my-tech-radar:latest
 
 open http://localhost:8080
+
+echo Use "docker kill <containerid>" to clean up container once finished
