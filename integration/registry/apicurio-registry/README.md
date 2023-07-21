@@ -11,3 +11,11 @@ docker-compose up -d
 ```
 docker-compose -f docker-apicurio_kafka.yml up -d
 ```
+
+## Other
+
+Older vanilla docker install
+
+```
+run_apicurio_registry_mem
+```
