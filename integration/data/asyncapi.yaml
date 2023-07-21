@@ -1,0 +1,124 @@
+asyncapi: 2.2.0
+info:
+  title: Demo Gartner Research API
+  version: 1.0.0
+  description: "Simple example API to demonstrate different API Specification formats. "
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+servers:
+  production:
+    url: 'apidemo.gartner.com:8883'
+    protocol: mqtt
+    description: Demo broker, TLS only
+defaultContentType: application/json
+channels:
+  'apidemo/1/0/reviews/modified/{researchId}':
+    description: The topic on which new or updated research reviews will be emitted
+    parameters:
+      researchId:
+        $ref: '#/components/parameters/researchId'
+    subscribe:
+      summary: receive updated or new review data about a research item
+      operationId: receiveReviews
+      message:
+        $ref: '#/components/messages/review'
+  'apidemo/1/0/reviews/{researchId}/create':
+    parameters:
+      researchId:
+        $ref: '#/components/parameters/researchId'
+    publish:
+      operationId: createReview
+      message:
+        $ref: '#/components/messages/review'
+  'apidemo/1/0/research/modified/{researchId}':
+    description: The topic on which new or updated research items will be emitted
+    parameters:
+      researchId:
+        $ref: '#/components/parameters/researchId'
+    subscribe:
+      summary: receive updated or new research items
+      operationId: receiveResearch
+      message:
+        $ref: '#/components/messages/research'
+components:
+  messages:
+    review:
+      name: researchReview
+      title: Research Review
+      summary: details of a review on a piece of research
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        $ref: '#/components/schemas/Review'
+    research:
+      name: researchItem
+      title: Research Item
+      summary: details of a piece of research
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        $ref: '#/components/schemas/Research'
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        bio:
+          type: string
+    Research:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        ResearchId:
+          type: integer
+          format: int64
+        title:
+          type: string
+        publicationDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          description: Research Status
+          enum:
+            - active
+            - foundational
+            - archived
+        author: 
+          $ref: '#/components/schemas/Author'
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        rating:
+          type: integer
+          format: int64
+        comment:
+          type: string
+  parameters:
+    researchId:
+      description: The ID of a Research Item.
+      schema:
+        type: integer
+        format: int64
+  messageTraits:
+    commonHeaders:
+      headers:
+        type: object
+        properties:
+          my-app-header:
+            type: integer
+            minimum: 0
+            maximum: 100
+

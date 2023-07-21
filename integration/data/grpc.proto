@@ -1,0 +1,118 @@
+syntax="proto3";
+
+package demoapi.gartner.com;
+
+option java_outer_classname = "DemoApi";
+option optimize_for = SPEED;
+
+// Generated according to https://cloud.google.com/apis/design/standard_methods
+service ResearchService {
+  rpc ListResearchs(ListResearchsRequest) returns (ListResearchsResponse) {
+    // optional HTTP binding metadata using by some gateways to provide HTTP access to gRPC services.
+    option (google.api.http) = {
+      get: "/v1/Research"
+    };
+  }
+
+  rpc GetResearch(GetResearchRequest) returns (Research) {
+    option (google.api.http) = {
+      get: "/v1/Research/{researchId}"
+      
+    };
+  }
+
+  rpc ListReviews(ListReviewsRequest) returns (ListReviewsResponse) {
+    option (google.api.http) = {
+        get: "/v1/Research/{researchId}/Reviews"
+        additional_bindings {
+            get: "/v1/Reviews/"
+          }
+      };  
+  }
+
+  rpc CreateReview(CreateReviewRequest) returns (Review) {
+    option (google.api.http) = {
+        post: "/v1/Research/{researchId}/Reviews"
+        body: "Review" 
+      };
+  }
+}
+
+message ListResearchsRequest {
+    // The maximum number of items to return.
+    int32 page_size = 2;
+
+    // The next_page_token value returned from a previous List request, if any.
+    string page_token = 3;
+}
+
+message ListResearchsResponse {
+    // The field name should match the noun "Research" in the method name.
+    // There will be a maximum number of items returned based on the page_size field in the request.
+    repeated Research Researchs = 1;
+
+    // Token to retrieve the next page of results, or empty if there are no more results in the list.
+    string next_page_token = 2;
+}
+
+message GetResearchRequest {
+    // The field will contain ID of the resource requested.
+    int64 researchId = 1;
+}
+
+message ListReviewsRequest {
+    //the Id of the resesarch note to get reviews for. 
+    int64 researchId = 1;
+
+    // The maximum number of items to return.
+    int32 page_size = 2;
+
+    // The next_page_token value returned from a previous List request, if any.
+    string page_token = 3;
+}
+
+message ListReviewsResponse {
+    // a collection of reviews
+    repeated Review reviews = 1;  
+
+    // Token to retrieve the next page of results, or empty if there are no more results in the list.
+    string next_page_token = 2;  
+}
+
+message CreateReviewRequest {
+    int64 researchId = 1;
+    int64 rating = 2;
+    string comment = 3;
+}
+
+message Research {
+    int64 id = 1;
+    int64 researchId = 2;
+    string title = 3;
+    string publicationDate = 4;
+    enum Status {
+        Active = 0;
+        Foundational = 1;
+        Archived = 2;
+      }
+    Status status = 5;
+    // the list of authors for this research
+    repeated Author authors = 6;
+}
+
+message Review {
+    int64 id = 1;
+    int64 rating = 2;
+    string comment = 3;
+}
+message Author {
+    int64 id = 1;
+    string name = 2;
+    string bio = 3;
+
+message ApiResponse{
+    int32 code = 1;
+    string type = 2;
+    string message = 3;
+}    
+

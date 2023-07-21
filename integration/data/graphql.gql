@@ -1,0 +1,67 @@
+"""
+Query entry points to this schema
+"""
+type Query {
+  " find a research item by ID "
+  research(id: ID!): Research!
+  " find reviews by research item ID "
+  reviews(researchId: ID!): [Review!]!
+}
+
+"""
+Query entry points to this schema
+"""
+type Mutation {
+  "Add a review to the specific research item"
+  AddReview(researchId: [ID]!): Research!
+}
+
+"""
+A research document has an id, a title 
+"""
+type Research {
+  id: ID!
+  title: String!
+  publicationDate: String
+  authors: [Author]
+  reviews: [Review]
+  status: status!
+}
+
+
+"""
+A review has an associated research item, a rating and a comment."
+"""
+type Review {
+  id: ID!
+  "a rating provided by the reviewer"
+  rating: Int # from 0-5
+  "Comment provided by the reviewer"
+  comment: String
+  "the research this review applies to"
+  research: Research
+}
+
+"""
+# A research author has a name, a biograhy and a list of published research
+"""
+type Author {
+    id: ID!
+    name: String
+    bio: String
+    research: [Research]
+}
+
+
+
+"""
+allowed values for the status of a piece of research.
+"""
+enum status {
+  ACTIVE 
+  FOUNDATIONAL
+  ARCHIVED
+}
+
+
+

@@ -1,0 +1,178 @@
+openapi: 3.1.0
+info:
+  title: Gartner Content API Demo
+  description: "This is a simple (and fictional) API for interacting with Gartner Research"
+  termsOfService: http://gartner.com/terms/
+  contact:
+    email: api.support@gartner.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Gartner
+  url: https://gartner.com
+servers:
+  - url: https://demoapi.gartner.com/v1
+  - url: https://demoapisandbox.gartner.com/v1
+tags:
+  - name: research
+    description: All your technology insights and advice in one place
+    externalDocs:
+      description: Find out more
+      url: https://www.gartner.com/en/information-technology/research/research-index
+  - name: insights
+    description: Access to Gartner insights
+  - name: reviews
+    description: feedback from users of Gartner research
+paths:
+  /research/{id}:
+    get:
+      tags:
+        - research
+      summary: Retrieve published Gartner research
+      description: retrieve research by ID
+      operationId: getResearchbyID
+      parameters:
+        - name: id
+          in: path
+          description: Status values that need to be considered for filter
+          required: true
+          style: simple
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/Research"
+        400:
+          description: Invalid status value
+          content: {}
+      security:
+        - gartner_auth:
+            - read:research
+  /research/{id}/reviews:
+    get:
+      tags:
+        - research
+      summary: get the reviews for a piece of research
+      operationId: getReviews
+      parameters:
+        - name: id
+          in: path
+          description: ID of research
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/review"
+      security:
+        - gartner_auth:
+            - read:reviews
+    post:
+      tags:
+        - research
+      summary: add a review to a piece of research
+      operationId: reviewResearch
+      parameters:
+        - name: id
+          in: path
+          description: ID research to review
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/review"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+      security:
+        - gartner_auth:
+            - write:reviews
+            - read:reviews
+components:
+  schemas:
+    Research:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        ResearchId:
+          type: integer
+          format: int64
+        title:
+          type: string
+        publicationDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          description: Research Status
+          enum:
+            - active
+            - foundational
+            - archived
+    review:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        rating:
+          type: integer
+          format: int64
+        comment:
+          type: string
+    author:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        bio:
+          type: string
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    gartner_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://apidemo.gartner.com/oauth/dialog
+          scopes:
+            write:reviews: post or modify reviews
+            read:reviews: retrieve research reviews
+            read:research: retrieve gartner research
