@@ -18,13 +18,13 @@ Further Consideration:
 
 | Name | Comments |
 | --- | --- |
-| APICurio Registry | - AsyncAPI testing incomplete <br/>- OpenAPI OK |
+| APICurio Registry | - AsyncAPI and OpenAPI OK |
 
 On Hold:
 
 | Name | Comments |
 | --- | --- |
-|  | |
+| APICurio Studio | - Not able to simply test here. Current compose file expects to be run within the original repository |
 
 ## Portal
 
@@ -39,7 +39,7 @@ Further Consideration:
 
 | Name | Comments |
 | --- | --- |
-|  | |
+| Gravitee | - Supports AsyncAPI and OpenAPI in UI, but not GraphQL.<br/>- Developer consumer experience unclear from test. Needs further research. |
 
 On Hold:
 
