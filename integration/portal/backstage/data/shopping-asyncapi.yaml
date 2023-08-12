@@ -8,4 +8,4 @@ spec:
   lifecycle: production
   owner: user:guest
   definition:
-    $asyncapi: https://github.com/DawMatt/trial/blob/Integration/integration/data/Shopping-API-events-v1.asyncapi.yaml
+    $text: https://github.com/DawMatt/trial/blob/Integration/integration/data/Shopping-API-events-v1.asyncapi.yaml

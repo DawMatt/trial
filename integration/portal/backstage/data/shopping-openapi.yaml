@@ -8,4 +8,4 @@ spec:
   lifecycle: production
   owner: user:guest
   definition:
-    $openapi: https://github.com/DawMatt/trial/blob/Integration/integration/data/Shopping-API-REST.oas3.yaml
+    $text: https://github.com/DawMatt/trial/blob/Integration/integration/data/Shopping-API-REST.oas3.yaml
