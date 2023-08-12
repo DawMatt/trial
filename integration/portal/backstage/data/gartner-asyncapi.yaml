@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: gartner-asyncapi
+  description: The Gartner research AsyncAPI
+spec:
+  type: asyncapi
+  lifecycle: production
+  owner: user:guest
+  definition:
+    $text: https://github.com/DawMatt/trial/blob/Integration/integration/data/gartner-asyncapi.yaml
