@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: shopping-asyncapi
+  description: The Shopping AsyncAPI
+spec:
+  type: asyncapi
+  lifecycle: production
+  owner: user:guest
+  definition:
+    $asyncapi: https://github.com/DawMatt/trial/blob/Integration/integration/data/Shopping-API-events-v1.asyncapi.yaml
