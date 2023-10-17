@@ -1,10 +1,13 @@
 apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
+  title: Material SubLot Event
   name: Material_Sub-Lot_Event
   description: This is the Available Stock Inventory information on the floor.
   tags:
-    - asyncapi
+    - async
+    - product-inventory
+    - materialsublot
   annotations:
     backstage.io/spectral-ruleset-url: https://gist.githubusercontent.com/dweber019/a368819668a76363849db6378792e907/raw/backstage-spectral-linter-asyncapi-ruleset.yaml
 spec:
