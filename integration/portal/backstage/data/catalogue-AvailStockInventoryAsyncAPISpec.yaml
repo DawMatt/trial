@@ -8,4 +8,4 @@ spec:
   lifecycle: development
   owner: user:guest
   definition:
-    $text: https://github.com/DawMatt/trial/blob/Integration/integration/examples/AvailStockInventoryAsyncAPISpec.yaml
+    $text: https://github.com/DawMatt/trial/blob/Integration/integration/portal/backstage/examples/AvailStockInventoryAsyncAPISpec.yaml
