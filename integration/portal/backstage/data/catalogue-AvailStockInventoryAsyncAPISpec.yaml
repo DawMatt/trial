@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: Material Sub-Lot Event
+  description: This is the Available Stock Inventory information on the floor.
+spec:
+  type: asyncapi
+  lifecycle: development
+  owner: user:guest
+  definition:
+    $text: https://github.com/DawMatt/trial/blob/Integration/integration/examples/AvailStockInventoryAsyncAPISpec.yaml
